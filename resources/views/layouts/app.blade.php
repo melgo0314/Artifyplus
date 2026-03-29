@@ -11,12 +11,13 @@
     
     <!--- FontAwesome --> 
     <script src="https://kit.fontawesome.com/fe729c9362.js" crossorigin="anonymous"></script>
-
 </head>
 <body>
-    <div class="container p-5 my-5 border">
+    <body class="@yield('body-class')">
+        <div class="@yield('container-class', 'container p-5 my-5 border')">
         <!--- Uso de Blade para definir la plantilla --> 
         @yield('content')
+       
 
 
     </div>

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,9 +34,11 @@ Route::post('/acceso', [AuthController::class, 'login'
 Route::post('/cerrar', [AuthController::class, 'logout'
 ])->name('cerrar');
 
-Route::middleware(['auth', 'admin'])->group(function() {
-    Route::get('/admin.dashboard', [AuthController::class, 'adminDashboard'
-    ])->name('admin.dashboard');  
+
+
+Route::middleware(['auth','admin'])->group(function() {
+    Route::get('/admin.dashboard', [AdminController::class, 'index'])
+        ->name('admin.dashboard');
 });
 
 Route::post('/suscribirse', [AuthController::class, 'suscribirse'])

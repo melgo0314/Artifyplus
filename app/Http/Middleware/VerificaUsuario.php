@@ -19,7 +19,7 @@ class VerificaUsuario
          //verificar si existe una sesion activa
         if(!Auth::check()){
             //Enviar al usuario a que se registre
-            return redirect()-> route('registro')->with('error', 'Se debe registrar e iniciar sesión');
+            return redirect()-> route('acceso')->with('error', 'Se debe registrar e iniciar sesión');
 
         }
         //termino del middleware

@@ -1,46 +1,33 @@
 @if (session('success'))
-    <div id="alert" class="alert alert-success alert-dismissible d-flex align-items-center fade show">
-        
-        <i class="fa-solid fa-circle-check"></i>
-        <!--Obtener mensaje desde la sesion-->
-        <strong class="mx-2">Exito! </strong>{{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <div class="alert-custom success">
+        {{ session('success') }}
     </div>
 
-    <script>
-        setTimeout(function() {
-        //obtener el elemento por el id
-        let alerta = document.getElementById('alert');
+@elseif (session('error'))
+    <div class="alert-error">
+        {{ session('error') }}
+    </div>
 
-        if(alerta){
-            //quitar clase que permite ver la alerta
-            alerta.classList.remove('show');
-            //añadir animacion fade
-            alerta.classList.remove('fade');
-
-            setTimeout(() => alerta.remove(), 500);
-        }
-
-        }, 3000); //desaperecer despues de 3 segundos
-    </script>
+@elseif ($errors->any())
+    <div class="alert-custom-error">
+        {{ $errors->first() }}
+    </div>
 @endif
+<script>
+    setTimeout(function() {
+        let alerts = [
+            document.getElementById('alert-custom-success'),
+            document.getElementById('alert-error'),
+            document.getElementById('alert-custom-error')
+        ];
 
-@if (session('error'))
-    <div id="alert-error" class="alert alert-danger alert-dismissible fade show">
-        <strong>Error:</strong> {{ session('error') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-
-    <script>
-        setTimeout(function() {
-            let alerta = document.getElementById('alert-error');
-
+        alerts.forEach(alerta => {
             if(alerta){
-                alerta.classList.remove('show');
-
+                alerta.style.opacity = "0";
+                alerta.style.transition = "0.5s";
                 setTimeout(() => alerta.remove(), 500);
             }
+        });
 
-        }, 3000);
-    </script>
-@endif
+    }, 3000);
+</script>

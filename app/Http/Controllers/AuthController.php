@@ -63,7 +63,7 @@ class AuthController extends Controller
             }
 
             return back()->withErrors([
-                'email' => 'Datos incorrectos',
+                'email' => 'Correo o contraseña incorrectos',
             ]);
         }
 
@@ -94,11 +94,13 @@ class AuthController extends Controller
             $user->subscription_status = 'active';
             $user->subscription_start = now();
             $user->subscription_end = now()->addMonth();
-            $user->save();
+           
 
             return redirect()->route('home.index')
             ->with('success', '¡Te has suscrito exitosamente!');
         }
+
+        
 
 
 }

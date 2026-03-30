@@ -26,7 +26,7 @@ class AdminMiddleware
         //Verificar si el usuario es administrador
         if(!Auth::user()->is_admin){
             //Enviar al usuario a la pagina de inicio
-            return redirect()->route('welcome')
+            return redirect()->route('acceso')
             ->with('error', 'No cuentas con permisos de admnistrador');
         }
         return $next($request);

@@ -83,22 +83,6 @@ class AuthController extends Controller
             return view('admin.dashboard');
         }
 
-        //Método para suscribirse a un plan
-        public function suscribirse(){
-            $user = Auth::user();  
-            
-             if($user->subscription_status == 'active' && now()->lessThan($user->subscription_end)){
-                return back()->with('error', 'Ya tienes una suscripción activa');
-            }
-
-            $user->subscription_status = 'active';
-            $user->subscription_start = now();
-            $user->subscription_end = now()->addMonth();
-           
-
-            return redirect()->route('home.index')
-            ->with('success', '¡Te has suscrito exitosamente!');
-        }
 
         
 

@@ -24,9 +24,6 @@ class User extends Authenticatable
         'phone',
         'password',
         'is_admin',
-        'subscription_status',
-        'subscription_start',
-        'subscription_end',
         'is_active',
     ];
 
@@ -51,5 +48,9 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function channels(){
+        return $this->belongsToMany(Channel::class, 'subscriptions');
     }
 }

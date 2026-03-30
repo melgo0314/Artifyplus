@@ -4,179 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
-    @extends('layouts.app')
+@extends('layouts.app')
 
-    @section('container-class', '')
+@section('container-class', '')
 
-    @section('content')
+@section('content')
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0a0a0a;
-    color: white;
-}
+body { background:#0a0a0a; color:white; }
 
 /* SIDEBAR */
 .sidebar {
-    width: 220px;
-    height: 100vh;
-    background: #000;
-    border-right: 1px solid rgba(128,0,255,0.3);
-    padding: 20px;
-    position: fixed; 
-    top: 0;
-    left: 0;
+    width:220px;
+    height:100vh;
+    position:fixed;
+    background:#000;
+    padding:20px;
 }
 
-.sidebar h2 span {
-    color: #bb00ff;
-}
-
-.sidebar a {
-    display: block;
-    color: #aaa;
-    text-decoration: none;
-    margin: 10px 0;
-}
-
-.sidebar a:hover {
-    color: #bb00ff;
-}
-
-/* MAIN */
 .main {
-    margin-left: 220px;
-    padding: 30px;
+    margin-left:220px;
+    padding:30px;
 }
 
-/* HEADER */
-.header {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+.btn-purple {
+    background:linear-gradient(90deg,#8000ff,#bb00ff);
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    color:white;
 }
 
-/* BOTÓN LOGOUT */
-.btn-logout {
-    background: linear-gradient(90deg, #ff0040, #ff4d6d);
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    color: white;
+.btn-danger {
+    background:linear-gradient(90deg,#ff0040,#ff4d6d);
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    color:white;
 }
 
-/* CARDS */
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
-    margin-bottom: 30px;
+.grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
 }
 
 .card {
-    background: linear-gradient(135deg, #5a0283, #28014a);
-    padding: 20px;
-    border-radius: 15px;
-    text-align: center;
-}
-
-/* TABLA */
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #111;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.table th, .table td {
-    padding: 12px;
-    border-bottom: 1px solid #191818;
-}
-
-.table th {
-    background: #40025c;
+    background:linear-gradient(135deg,#1a0026,#2b0050);
+    padding:20px;
+    border-radius:15px;
+    color: white;
 }
 </style>
 </head>
 <body>
-   
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <h2>Artify<span>Admin</span></h2>
+   <div class="sidebar">
+        <h2>Artify<span style="color:#bb00ff">Admin</span></h2>
 
-        <a href="#">Dashboard</a>
-        <a href="#">Usuarios</a>
-        <a href="#">Contenido</a>
-        <a href="#">Suscripciones</a>
-         <form action="{{ route('cerrar') }}" method="POST">
-                @csrf
-                <button class="btn-logout">Cerrar sesión</button>
-            </form>
+        <form action="{{ route('cerrar') }}" method="POST">
+            @csrf
+            <button class="btn-danger">Cerrar sesión</button>
+        </form>
     </div>
 
-    <!-- MAIN -->
     <div class="main">
 
-        <!-- HEADER -->
-        <div class="header">
-            <h1>Panel de Administración</h1>  
+        <div style="display:flex; justify-content:space-between;">
+            <h1>Channels</h1>
+
+            <form action="{{ route('admin.create') }}">
+              @csrf    
+            <button class="btn-purple"><i class="fa-solid fa-plus"></i>Crear Canal</button>
+            </form>
         </div>
+         @include('partials.alerts')
 
-        <!-- CARDS -->
-        <div class="cards">
-            <div class="card">
-                <h3>Usuarios</h3>
-                <p>120</p>
-            </div>
+        <div class="grid">
 
+            @foreach($channels as $channel)
             <div class="card">
-                <h3>Suscriptores</h3>
-                <p>45</p>
-            </div>
 
-            <div class="card">
-                <h3>Videos</h3>
-                <p>32</p>
-            </div>
+                <h3>{{ $channel->name }}</h3>
+                <p>{{ $channel->description }}</p>
+                 
+                <a href="{{ route('admin.edit',$channel->id) }}" >
+                    <button class="btn-purple"><i class="fa-solid fa-pen-to-square"></i></button>
+                </a>
 
-            <div class="card">
-                <h3>Ingresos</h3>
-                <p>$12,500</p>
+                <form action="{{ route('admin.delete',$channel->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button 
+                        type="submit"
+                        class="btn-danger"
+                        onclick="return confirm('Eliminar el registro?')">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </form>
+
             </div>
+            @endforeach
+
         </div>
-
-        <!-- TABLA -->
-        <h2>Usuarios</h2>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Telefono</th>
-                    <th>Suscripcion_Status</th>
-                    <th>Suscripcion_Start</th>
-                    <th>Suscripcion_End</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($users as $user)
-                    <tr>
-                        <td>{{ $user->id }}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->phone }}</td>
-                        <td>{{ $user->subscription_status }}</td>
-                        <td>{{ $user->subscription_start }}</td>
-                        <td>{{ $user->subscription_end }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
 
     </div>
 

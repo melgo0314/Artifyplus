@@ -125,77 +125,113 @@ h2 {
     transform: scale(1.05);
     box-shadow: 0 0 10px #ff4d6d;
 }
+
+/* BOTÓN SUSCRIBIR */
+.btn-subscribe {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: linear-gradient(90deg, #8000ff, #bb00ff);
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* HOVER */
+.btn-subscribe:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #bb00ff;
+}
+
+/* CLICK */
+.btn-subscribe:active {
+    transform: scale(0.97);
+}
+
+.btn-subscribed {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+
+    border-radius: 10px;
+    border: 1px solid #bb00ff;
+
+    background: transparent;
+    color: #bb00ff;
+    font-weight: bold;
+}
+.btn-watch {
+    display: block;
+    width: 40%;
+    margin-top: 10px;
+    padding: 10px;
+
+    border-radius: 10px;
+    text-align: center;
+
+    background: rgba(255,255,255,0.05);
+    border: 1px solid #bb00ff;
+
+    color: #dc96f5;
+    font-weight: bold;
+    text-decoration: none;
+
+    transition: 0.3s;
+}
+
+.btn-watch:hover {
+    background: linear-gradient(90deg, #8000ff, #bb00ff);
+    color: white;
+    box-shadow: 0 0 15px #bb00ff;
+}
 </style>
 
+
 <div class="main-container">
-    <input type="text" class="search-bar" placeholder="Buscar contenido...">
+
+    <h2>Música</h2>
+    <div class="subtitle">Lo más popular <i class="fa-solid fa-chart-line"></i></div>
+    
     <div class="logut-container">
         <form action="{{ route('cerrar') }}" method="POST">
             @csrf
             <button class="btn-logout">Cerrar sesión</button>
         </form>
     </div>
-
-
-    <h2>Música</h2>
-    <div class="subtitle">Lo más popular <i class="fa-solid fa-chart-line"></i></div>
-    
+    <br>
 
     <div class="grid">
 
-        <!-- CARD -->
+    @foreach($channels as $channel)
         <div class="card">
-            <div class="star">★</div>
-            <div class="card-header">
-                <strong>Natanael Cano</strong>
-            </div>
-            <p>Contenido exclusivo: videos, música y lanzamientos especiales.</p>
-        </div>
 
-        <div class="card">
-            <div class="star">★</div>
             <div class="card-header">
-                <strong>La Obsesion</strong>
+                <strong>{{ $channel->name }}</strong>
             </div>
-            <p>Contenido exclusivo: videos, música y lanzamientos especiales.</p>
-        </div>
 
-        <div class="card">
-            <div class="star">★</div>
-            <div class="card-header">
-                <strong>Bad Bunny</strong>
-            </div>
-            <p>Contenido exclusivo: videos, música y lanzamientos especiales.</p>
-        </div>
+            <p>{{ $channel->description }}</p>
 
-        <div class="card">
-            <div class="star">★</div>
-            <div class="card-header">
-                <strong>Alemán</strong>
-            </div>
-            <p>Contenido exclusivo: videos, música y lanzamientos especiales.</p>
+            @if(auth()->user()->channels->contains($channel->id))               
+                <a href="#" class="btn-watch">
+                    Ver más  <i class="fa-solid fa-caret-right"></i>
+                </a>
+            @else
+                <form action="{{ route('subscribe', $channel->id) }}" method="POST">
+                    @csrf
+                    <button class="btn-subscribe">Suscribirme</button>
+                </form>
+            @endif
         </div>
-
-        <div class="card">
-            <div class="star">★</div>
-            <div class="card-header">
-                <strong>Cachirula</strong>
-            </div>
-            <p>Contenido exclusivo: videos, música y lanzamientos especiales.</p>
-        </div>
-
-        <div class="card">
-            <div class="star">★</div>
-            <div class="card-header">
-                <strong>Latin Mafia</strong>
-            </div>
-            <p>Contenido exclusivo: videos, música y lanzamientos especiales.</p>
-        </div>
-
+    @endforeach
     </div>
-
 </div>
-
 @endsection
 </body>
 </html>

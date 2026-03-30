@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio de sesion</title>
 
+    @extends('layouts.app')
+    @section('container-class', '')
+    @section('content')
 <style>
 body {
     background: radial-gradient(circle at top, #2b0050, #0a0a0a 70%);
@@ -128,33 +131,22 @@ body::before {
     border-color: #bb00ff;
     box-shadow: 0 0 10px #bb00ff;
 }
-.alert-custom-error {
-    background: rgba(255, 0, 80, 0.1);
-    border: 1px solid rgba(255, 0, 80, 0.5);
-    color: #ff4d6d;
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    font-size: 14px;
-    text-align: center;
-}
 .alert-error {
     background: rgba(255, 0, 80, 0.1);
     border: 1px solid rgba(255, 0, 80, 0.5);
     color: #ff4d6d;
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    font-size: 14px;
-    text-align: center;
+}
+
+.alert-success {
+    background: rgba(0, 255, 150, 0.1);
+    border: 1px solid rgba(0, 255, 150, 0.5);
+    color: #00ffae;
 }
 </style>
 </head>
 <body>
 
-    @extends('layouts.app')
-    @section('container-class', '')
-    @section('content')
+   
 
     <div class="login-container">
          <div class="logo">Artify<span>Plus</span></div>
@@ -178,8 +170,7 @@ body::before {
         
             <button type="submit" class="btn btn-primary">Ingresar</button> 
         </form>
-        
-
+        <br>
         <p>¿No tienes cuenta? 
             <a href="{{ route('registro') }}">Regístrate</a>
         </p>

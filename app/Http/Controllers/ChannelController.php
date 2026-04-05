@@ -9,6 +9,7 @@ use App\Models\Subscription;
 use App\Models\User;
 
 
+
 class ChannelController extends Controller
 {
     //Mostrar canales
@@ -27,7 +28,7 @@ class ChannelController extends Controller
                     ->exists();
 
         if($exists){
-            return back()->with('error', 'Ya estás suscrito a este canal');
+            return back()->with('warning', 'Ya estás suscrito a este canal');
         }
 
         Subscription::create([
@@ -88,4 +89,6 @@ class ChannelController extends Controller
 
         return back()->with('success', 'Canal eliminado');
     }
+
+   
 }

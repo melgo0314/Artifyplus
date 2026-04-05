@@ -61,6 +61,17 @@ body { background:#0a0a0a; color:white; }
    <div class="sidebar">
         <h2>Artify<span style="color:#bb00ff">Admin</span></h2>
 
+        <a href="{{ route('admin.usuarios') }}">
+           <button class="btn-purple">Gestionar Usuarios</button> 
+        </a>
+
+        <a href="{{ route('admin.videos.create') }}">
+            <button class="btn-create">
+                <i class="fa-solid fa-film"></i> Crear Video
+            </button>
+         </a>
+
+        <br><br>
         <form action="{{ route('cerrar') }}" method="POST">
             @csrf
             <button class="btn-danger">Cerrar sesión</button>

@@ -14,4 +14,14 @@ class Subscription extends Model
         'start_date',
         'end_date'
     ];
+
+    public function channel()
+    {
+        return $this->belongsTo(Channel::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -50,7 +50,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function channels(){
-        return $this->belongsToMany(Channel::class, 'subscriptions');
+    public function channels()
+    {
+        return $this->belongsToMany(Channel::class, 'subscriptions')
+            ->wherePivot('status', 'active');
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
     }
 }

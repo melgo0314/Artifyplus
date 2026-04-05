@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    
+
 @extends('layouts.app')
 
 @section('container-class', '')
@@ -14,12 +14,12 @@
 <style>
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: radial-gradient(circle at bottom, #8e2de2, #0a0a0a 70%);
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #1a0b2e, #0a0a14);
     color: white;
 }
 
-/* CONTENEDOR PRINCIPAL */
+/* CONTENEDOR */
 .main-container {
     width: 90%;
     max-width: 1100px;
@@ -30,29 +30,68 @@ body {
     background: rgba(20, 20, 30, 0.7);
     backdrop-filter: blur(15px);
 
-    box-shadow:
-        0 0 40px rgba(128,0,255,0.4);
+    box-shadow: 0 0 40px rgba(128,0,255,0.3);
 }
 
-/* BUSCADOR */
-.search-bar {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    background: rgba(255,255,255,0.1);
-    color: white;
-    margin-bottom: 20px;
+/* HEADER */
+.top-bar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
 }
 
 /* TITULO */
-h2 {
-    margin-bottom: 5px;
+.title-box h2{
+    margin: 0;
+    font-size: 28px;
 }
 
-.subtitle {
+.subtitle{
     color: #aaa;
-    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* ACCIONES */
+.actions-box{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* BOTÓN SUSCRIPCIONES */
+.btn-subscriptions{
+    background: linear-gradient(135deg, #9333ea, #6d28d9);
+    padding: 8px 14px;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.3s;
+}
+
+.btn-subscriptions:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #a855f7;
+}
+
+/* LOGOUT */
+.btn-logout{
+    background: rgba(255,255,255,0.08);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 10px;
+    color: #ff4d6d;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-logout:hover{
+    background: rgba(255,77,109,0.2);
+    box-shadow: 0 0 10px #ff4d6d;
 }
 
 /* GRID */
@@ -67,63 +106,24 @@ h2 {
     background: linear-gradient(135deg, #6a00f4, #8e2de2);
     border-radius: 15px;
     padding: 20px;
-    position: relative;
     transition: 0.3s;
-    cursor: pointer;
+    position: relative;
 }
 
 .card:hover {
     transform: translateY(-5px) scale(1.03);
-    box-shadow: 0 0 20px #bb00ff;
+    box-shadow: 0 0 25px #bb00ff;
 }
 
-/* PERFIL */
-.card-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.card-header img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-/* ESTRELLA */
-.star {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: gold;
+/* TITULO CARD */
+.card strong{
+    font-size: 18px;
 }
 
 /* TEXTO */
 .card p {
     font-size: 13px;
-    color: #ddd;
-}
-
-.navbar-top {
-    display: flex;
-    justify-content: space-between;
-    margin: auto;
-}
-
-.btn-logout {
-    background: linear-gradient(90deg, #ff0040, #ff4d6d);
-    border: none;
-    padding: 8px 15px;
-    border-radius: 8px;
-    color: white;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.btn-logout:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 10px #ff4d6d;
+    color: #eee;
 }
 
 /* BOTÓN SUSCRIBIR */
@@ -138,40 +138,21 @@ h2 {
     background: linear-gradient(90deg, #8000ff, #bb00ff);
     color: white;
     font-weight: bold;
-    font-size: 14px;
 
     cursor: pointer;
     transition: 0.3s;
 }
 
-/* HOVER */
 .btn-subscribe:hover {
     transform: scale(1.05);
     box-shadow: 0 0 15px #bb00ff;
 }
 
-/* CLICK */
-.btn-subscribe:active {
-    transform: scale(0.97);
-}
-
-.btn-subscribed {
-    width: 100%;
-    margin-top: 10px;
-    padding: 10px;
-
-    border-radius: 10px;
-    border: 1px solid #bb00ff;
-
-    background: transparent;
-    color: #bb00ff;
-    font-weight: bold;
-}
+/* BOTÓN VER */
 .btn-watch {
-    display: block;
-    width: 40%;
+    display: inline-block;
     margin-top: 10px;
-    padding: 10px;
+    padding: 10px 15px;
 
     border-radius: 10px;
     text-align: center;
@@ -179,7 +160,7 @@ h2 {
     background: rgba(255,255,255,0.05);
     border: 1px solid #bb00ff;
 
-    color: #dc96f5;
+    color: #e0aaff;
     font-weight: bold;
     text-decoration: none;
 
@@ -193,45 +174,60 @@ h2 {
 }
 </style>
 
-
 <div class="main-container">
 
-    <h2>Música</h2>
-    <div class="subtitle">Lo más popular <i class="fa-solid fa-chart-line"></i></div>
-    
-    <div class="logut-container">
-        <form action="{{ route('cerrar') }}" method="POST">
-            @csrf
-            <button class="btn-logout">Cerrar sesión</button>
-        </form>
+    <div class="top-bar">
+
+        <div class="title-box">
+            <h2>Música</h2>
+            <div class="subtitle">
+                Lo más popular <i class="fa-solid fa-chart-line"></i>
+            </div>
+        </div>
+
+        <div class="actions-box">
+
+            <a href="{{ route('home.suscripciones') }}" class="btn-subscriptions">
+                <i class="fa-solid fa-credit-card"></i>
+                Suscripciones
+            </a>
+
+            <form action="{{ route('cerrar') }}" method="POST">
+                @csrf
+                <button class="btn-logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </form>
+
+        </div>
     </div>
-    <br>
 
     <div class="grid">
 
     @foreach($channels as $channel)
         <div class="card">
 
-            <div class="card-header">
-                <strong>{{ $channel->name }}</strong>
-            </div>
+            <strong>{{ $channel->name }}</strong>
 
             <p>{{ $channel->description }}</p>
 
             @if(auth()->user()->channels->contains($channel->id))               
-                <a href="#" class="btn-watch">
-                    Ver más  <i class="fa-solid fa-caret-right"></i>
+                <a href="{{ route('canal.videos', $channel->id) }}" class="btn-watch">
+                    Ver más <i class="fa-solid fa-caret-right"></i>
                 </a>
             @else
-                <form action="{{ route('subscribe', $channel->id) }}" method="POST">
-                    @csrf
-                    <button class="btn-subscribe">Suscribirme</button>
-                </form>
+                <a href="{{ route('pagar', $channel->id) }}">
+                    Suscribirse 
+                </a>
             @endif
+
         </div>
     @endforeach
+
     </div>
+
 </div>
+
 @endsection
 </body>
 </html>

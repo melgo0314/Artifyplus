@@ -31,19 +31,35 @@ class VideoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+   public function store(Request $request)
     {
+        $url = $request->url;
+
+        if (str_contains($url, 'youtu.be/')) {
+            $videoId = explode('youtu.be/', $url)[1];
+            $videoId = explode('?', $videoId)[0];
+        } else {
+            parse_str(parse_url($url, PHP_URL_QUERY), $params);
+            $videoId = $params['v'] ?? null;
+        }
+
+        if (!$videoId) {
+            return back()->with('error', 'URL no válida');
+        }
+
+        $embedUrl = 'https://www.youtube.com/embed/' . $videoId;
+
         Video::create([
             'title' => $request->title,
             'description' => $request->description,
-            'url' => $request->url,
+            'url' => $embedUrl,
             'channel_id' => $request->channel_id
         ]);
 
         return redirect()->route('admin.videos.create')
             ->with('success', 'Video creado correctamente');
     }
-    
+        
 
     /**
      * Display the specified resource.

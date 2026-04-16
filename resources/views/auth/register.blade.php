@@ -94,13 +94,11 @@ body::before {
     z-index: -1;
 }
 
-/* Grupo input + icono */
 .input-group {
     position: relative;
     margin: 15px 0;
 }
 
-/* Icono dentro */
 .input-group i {
     position: absolute;
     left: 12px;
@@ -114,7 +112,7 @@ body::before {
 .input-group input {
     width: 100%;
     margin: 3px 0;
-    padding: 12px 12px 12px 35px; /* 👈 espacio izquierda */
+    padding: 12px 12px 12px 35px; 
     border-radius: 10px;
     border: 1px solid #8000ff;
     background: rgba(255, 255, 255, 0.05);
@@ -157,51 +155,51 @@ body::before {
 <body>
    @extends('layouts.app')
 
-@section('container-class', '')
+    @section('container-class', '')
 
-@section('content')
+    @section('content')
 
-<div class="login-container">
-    <div class="logo">Artify<span>Plus</span></div>
+    <div class="login-container">
+        <div class="logo">Artify<span>Plus</span></div>
 
-    <h2>Registro</h2>
-     @include('partials.alerts')
+        <h2>Registro</h2>
+        @include('partials.alerts')
 
-    <form action="{{ route('registro.store') }}" method="POST">
-        @csrf
+        <form action="{{ route('registro.store') }}" method="POST">
+            @csrf
 
-        <div class="input-group">
-            <i class="fa-solid fa-user"></i>
-            <input type="text" name="name" placeholder="Nombre">
-        </div>
+            <div class="input-group">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" name="name" placeholder="Nombre">
+            </div>
 
-        <div class="input-group">
-            <i class="fa-solid fa-envelope"></i>
-            <input type="email" name="email" placeholder="Email">
-        </div>
+            <div class="input-group">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" name="email" placeholder="Email">
+            </div>
 
-        <div class="input-group">
-            <i class="fa-solid fa-phone"></i>
-            <input type="text" name="phone" placeholder="Teléfono">
-        </div>
+            <div class="input-group">
+                <i class="fa-solid fa-phone"></i>
+                <input type="text" name="phone" placeholder="Teléfono">
+            </div>
 
-        <div class="input-group">
-            <i class="fa-solid fa-lock"></i>
-            <input type="password" name="password" placeholder="Password">
-        </div>
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" name="password" placeholder="Password">
+            </div>
 
-        <div class="input-group">
-            <i class="fa-solid fa-lock"></i>
-            <input type="password" name="password_confirmation" placeholder="Confirmar Password">
-        </div>
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" name="password_confirmation" placeholder="Confirmar Password">
+            </div>
 
-        <button type="submit">Registrarse</button>
-    </form>
+            <button type="submit">Registrarse</button>
+        </form>
 
-        <p>¿Ya tienes cuenta? 
-            <a href="{{ route('acceso') }}">Inicia sesión</a>
-        </p>
-</div>
+            <p>¿Ya tienes cuenta? 
+                <a href="{{ route('acceso') }}">Inicia sesión</a>
+            </p>
+    </div>
     @endsection
 </body>
 </html>

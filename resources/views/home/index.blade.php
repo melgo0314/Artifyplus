@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
 
-@extends('layouts.app')
+    @extends('layouts.app')
 
-@section('container-class', '')
+    @section('container-class', '')
 
-@section('content')
+    @section('content')
 
 <style>
 body {
@@ -172,62 +172,86 @@ body {
     color: white;
     box-shadow: 0 0 15px #bb00ff;
 }
+
+.btn-subscribe {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+
+    background: #261141; 
+    color: white;
+
+    border-radius: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+
+    border: none;
+
+    transition: all 0.3s ease;
+}
+
+.btn-subscribe:hover {
+    background: #9333ea;
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.8);
+    transform: translateY(-2px);
+}
+
 </style>
+<body>
+    
+    <div class="main-container">
 
-<div class="main-container">
+        <div class="top-bar">
 
-    <div class="top-bar">
+            <div class="title-box">
+                <h2>Música</h2>
+                <div class="subtitle">
+                    Lo más popular <i class="fa-solid fa-chart-line"></i>
+                </div>
+            </div>
 
-        <div class="title-box">
-            <h2>Música</h2>
-            <div class="subtitle">
-                Lo más popular <i class="fa-solid fa-chart-line"></i>
+            <div class="actions-box">
+
+                <a href="{{ route('home.suscripciones') }}" class="btn-subscriptions">
+                    <i class="fa-solid fa-credit-card"></i>
+                    Suscripciones
+                </a>
+
+                <form action="{{ route('cerrar') }}" method="POST">
+                    @csrf
+                    <button class="btn-logout">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </form>
+
             </div>
         </div>
 
-        <div class="actions-box">
+        <div class="grid">
 
-            <a href="{{ route('home.suscripciones') }}" class="btn-subscriptions">
-                <i class="fa-solid fa-credit-card"></i>
-                Suscripciones
-            </a>
+        @foreach($channels as $channel)
+            <div class="card">
 
-            <form action="{{ route('cerrar') }}" method="POST">
-                @csrf
-                <button class="btn-logout">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                </button>
-            </form>
+                <strong>{{ $channel->name }}</strong>
 
+                <p>{{ $channel->description }}</p>
+
+                @if(auth()->user()->channels->contains($channel->id))               
+                    <a href="{{ route('canal.videos', $channel->id) }}" class="btn-watch">
+                        Ver más <i class="fa-solid fa-caret-right"></i>
+                    </a>
+                @else
+                    <a href="{{ route('pagar', $channel->id) }}" class="btn-subscribe">
+                        Suscribirse 
+                    </a>
+                @endif
+
+            </div>
+        @endforeach
         </div>
     </div>
-
-    <div class="grid">
-
-    @foreach($channels as $channel)
-        <div class="card">
-
-            <strong>{{ $channel->name }}</strong>
-
-            <p>{{ $channel->description }}</p>
-
-            @if(auth()->user()->channels->contains($channel->id))               
-                <a href="{{ route('canal.videos', $channel->id) }}" class="btn-watch">
-                    Ver más <i class="fa-solid fa-caret-right"></i>
-                </a>
-            @else
-                <a href="{{ route('pagar', $channel->id) }}">
-                    Suscribirse 
-                </a>
-            @endif
-
-        </div>
-    @endforeach
-
-    </div>
-
-</div>
-
-@endsection
+    @endsection
 </body>
 </html>

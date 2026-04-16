@@ -1,4 +1,9 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
     @extends('layouts.app')
     @section('content')
     @section('container-class', '') 
@@ -140,7 +145,6 @@ textarea:focus{
     padding-bottom: 50px; 
 }
 
-/* CONTENEDOR DE BOTONES */
 .actions{
     position: absolute;
     bottom: 10px;
@@ -170,7 +174,7 @@ textarea:focus{
             <iframe 
                 width="100%" 
                 height="400"
-                src="{{ str_replace('watch?v=', 'embed/', $video->url) }}" 
+                src="{{ $video->url }}"
                 frameborder="0" 
                 allowfullscreen>
             </iframe>

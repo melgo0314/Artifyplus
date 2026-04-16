@@ -6,9 +6,9 @@
     <title>Document</title>
     @extends('layouts.app')
 
-@section('container-class', '')
+    @section('container-class', '')
 
-@section('content')
+    @section('content')
 
 <style>
 body {
@@ -139,8 +139,6 @@ body {
         </form>
 
     </div>
-
     @endsection
-    
 </body>
 </html>

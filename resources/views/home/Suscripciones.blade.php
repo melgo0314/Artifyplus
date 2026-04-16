@@ -127,13 +127,11 @@ body{
                 @method('PUT')
                 <button class="btn-cancel">Cancelar</button>
             </form>
-
+            <BR>
             @if($sub->status != 'active')
-                <form action="{{ route('subscriptions.renew', $sub->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <button class="btn-renew">Renovar</button>
-                </form>
+                <a href="{{ route('pagar', $sub->channel_id) }}">
+                    <button class="btn-renew">Renovar </button>
+                </a>
             @endif
 
         </div>

@@ -21,7 +21,6 @@ body {
     
     background: rgba(10, 10, 10, 0.85);
     
-    /*glow morado */
     box-shadow: 
         0 0 25px rgba(128, 0, 255, 0.6),
         0 0 50px rgba(128, 0, 255, 0.2);

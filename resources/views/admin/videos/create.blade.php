@@ -16,7 +16,6 @@ body{
     font-family: 'Segoe UI', sans-serif;
 }
 
-/* CONTENEDOR */
 .container{
     max-width: 600px;
     margin: auto;
@@ -97,7 +96,7 @@ input:focus, textarea:focus, select:focus{
 
             <textarea name="description" placeholder="Descripción"></textarea>
 
-            <input type="text" name="url" placeholder="URL del video (YouTube)" required>
+            <input type="text" name="url" placeholder="URL del video" required>
 
             <select name="channel_id" required>
                 <option value="">Selecciona un canal</option>

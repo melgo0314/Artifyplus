@@ -4,16 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
-@extends('layouts.app')
+    @extends('layouts.app')
 
-@section('container-class', '')
+    @section('container-class', '')
 
-@section('content')
+    @section('content')
 
 <style>
 body { background:#0a0a0a; color:white; }
 
-/* SIDEBAR */
 .sidebar {
     width:220px;
     height:100vh;
@@ -64,9 +63,9 @@ body { background:#0a0a0a; color:white; }
         <a href="{{ route('admin.usuarios') }}">
            <button class="btn-purple">Gestionar Usuarios</button> 
         </a>
-
+        <br><br>
         <a href="{{ route('admin.videos.create') }}">
-            <button class="btn-create">
+            <button class="btn-purple">
                 <i class="fa-solid fa-film"></i> Crear Video
             </button>
          </a>

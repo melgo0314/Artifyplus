@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Usuarios</title>
+    <title>Editar</title>
 <style>
 body{
     background: radial-gradient(circle at top, #1a0b2e, #0a0a14);

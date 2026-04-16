@@ -100,7 +100,6 @@ body{
     @extends('layouts.app')
     @section('content')
     @section('container-class', '')
-  
 
     <div class="container">
 
@@ -129,7 +128,6 @@ body{
         </div>
 
     </div>
-
     @endsection
 </body>
 </html>

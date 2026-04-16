@@ -25,7 +25,6 @@ body {
     
     background: rgba(10, 10, 10, 0.85);
     
-    /*glow morado */
     box-shadow: 
         0 0 25px rgba(128, 0, 255, 0.6),
         0 0 50px rgba(128, 0, 255, 0.2);
@@ -98,13 +97,11 @@ body::before {
     z-index: -1;
 }
 
-/* Grupo input + icono */
 .input-group {
     position: relative;
     margin: 15px 0;
 }
 
-/* Icono dentro */
 .input-group i {
     position: absolute;
     left: 12px;
@@ -118,7 +115,7 @@ body::before {
 .input-group input {
     width: 100%;
     margin: 3px 0;
-    padding: 12px 12px 12px 35px; /* 👈 espacio izquierda */
+    padding: 12px 12px 12px 35px; 
     border-radius: 10px;
     border: 1px solid #8000ff;
     background: rgba(255, 255, 255, 0.05);
@@ -145,8 +142,6 @@ body::before {
 </style>
 </head>
 <body>
-
-   
 
     <div class="login-container">
          <div class="logo">Artify<span>Plus</span></div>

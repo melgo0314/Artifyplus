@@ -15,10 +15,9 @@ use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller
 {
-    public function pagar($channel_id)
+   public function pagar($channel_id)
     {
         try {
-            session(['channel_id' => $channel_id]); // 🔥 IMPORTANTE
 
             MercadoPagoConfig::setAccessToken(config('services.mercadopago.token'));
 
@@ -36,12 +35,14 @@ class PaymentController extends Controller
 
                 "external_reference" => Auth::id() . '|' . $channel_id,
 
-                "back_urls" => [ 
-                "success" => "https://TU-NGROK/success", 
-                "failure" => "https://TU-NGROK/failure", 
-                "pending" => "https://TU-NGROK/pending", 
+                "back_urls" => [
+                    "success" => "https://greatly-unautographed-hertha.ngrok-free.dev/success",
+                    "failure" => "https://greatly-unautographed-hertha.ngrok-free.dev/failure",
+                    "pending" => "https://greatly-unautographed-hertha.ngrok-free.dev/pending",
                 ],
-                "notification_url" => "https://TU-NGROK/webhook/mercadopago",
+
+                "notification_url" => "https://greatly-unautographed-hertha.ngrok-free.dev/webhook/mercadopago",
+
                 "auto_return" => "approved",
             ]);
 
@@ -54,20 +55,43 @@ class PaymentController extends Controller
 
     public function success(Request $request)
     {
-        $user_id = Auth::id();
-        $channel_id = session('channel_id');
+        $payment_id = $request->query('payment_id');
 
-        if (!$channel_id) {
+        if (!$payment_id) {
             return redirect()->route('home.index')
-                ->with('error', 'No se pudo identificar el canal');
+                ->with('error', 'Pago no válido');
         }
+
+        MercadoPagoConfig::setAccessToken(config('services.mercadopago.token'));
+        $client = new PaymentClient();
+
+        $payment = $client->get($payment_id);
+
+        if ($payment->status !== 'approved') {
+            return redirect()->route('home.index')
+                ->with('error', 'Pago no aprobado');
+        }
+
+        $external = $payment->external_reference;
+
+        list($user_id, $channel_id) = explode('|', $external);
 
         $exists = Subscription::where('user_id', $user_id)
             ->where('channel_id', $channel_id)
             ->where('status', 'active')
             ->exists();
 
-        if (!$exists) {
+        $subscription = Subscription::where('user_id', $user_id)
+        ->where('channel_id', $channel_id)
+        ->first();
+
+        if ($subscription) {
+            $subscription->update([
+                'status' => 'active',
+                'start_date' => now(),
+                'end_date' => now()->addMonth(),
+            ]);
+        } else {
             Subscription::create([
                 'user_id' => $user_id,
                 'channel_id' => $channel_id,
@@ -113,29 +137,29 @@ class PaymentController extends Controller
 
         if ($payment->status === 'approved') {
 
-        $external = $payment->external_reference ?? null;
+            $external = $payment->external_reference ?? null;
 
-        if (!$external) {
-            return response()->json(['error' => 'No external_reference']);
+            if (!$external) {
+                return response()->json(['error' => 'No external_reference']);
+            }
+
+            list($user_id, $channel_id) = explode('|', $external);
+
+            $exists = Subscription::where('user_id', $user_id)
+                ->where('channel_id', $channel_id)
+                ->where('status', 'active')
+                ->exists();
+
+            if (!$exists) {
+                Subscription::create([
+                    'user_id' => $user_id,
+                    'channel_id' => $channel_id,
+                    'status' => 'active',
+                    'start_date' => now(),
+                    'end_date' => now()->addMonth(),
+                ]);
+            }
         }
-
-        list($user_id, $channel_id) = explode('|', $external);
-
-        $exists = Subscription::where('user_id', $user_id)
-            ->where('channel_id', $channel_id)
-            ->where('status', 'active')
-            ->exists();
-
-        if (!$exists) {
-            Subscription::create([
-                'user_id' => $user_id,
-                'channel_id' => $channel_id,
-                'status' => 'active',
-                'start_date' => now(),
-                'end_date' => now()->addMonth(),
-            ]);
-        }
-    }
         return response()->json(['status' => 'ok']);
     }
 }

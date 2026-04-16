@@ -68,7 +68,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         ->name('admin.delete');
 });
 
-
+//Rutas para crud de usuarios en administrador
 Route::middleware(['auth','admin'])->group(function () {
     Route::get('/admin/usuarios/crear', [AdminController::class, 'create'])
         ->name('admin.users.create');
@@ -89,6 +89,7 @@ Route::middleware(['auth','admin'])->group(function () {
         ->name('admin.users.destroy');
 });
 
+//Rutas para el crud de los comentarios
 Route::middleware(['auth'])->group(function () {
     Route::get('/videos/{video}/comentarios', [CommentController::class, 'index'])
         ->name('comments.index');
@@ -106,12 +107,14 @@ Route::middleware(['auth'])->group(function () {
         ->name('comments.destroy');
 });
 
+//Rutas para lver los videos
 Route::get('/canal/{id}', [VideoController::class, 'index'])
     ->name('canal.videos');
 
 Route::get('/videos/{id}', [VideoController::class, 'show'])
     ->name('videos.show');
 
+//Rutas para el administrador para crear los videos
 Route::middleware(['auth','admin'])->group(function () {
 
     Route::get('/admin/videos', [VideoController::class, 'adminIndex'])
@@ -124,6 +127,7 @@ Route::middleware(['auth','admin'])->group(function () {
     ->name('admin.videos.store');
 });
 
+//Rutas para ver todas las suscripciones
 Route::middleware(['auth'])->group(function () {
     Route::get('/mis-suscripciones', [SubscriptionController::class, 'index'])
         ->name('home.suscripciones');
@@ -135,17 +139,12 @@ Route::middleware(['auth'])->group(function () {
     ->name('subscriptions.renew');
 });
 
-
-
+//Rutas para hacer el pago 
 Route::middleware(['auth'])->group(function () {
-
-    Route::get('/pagar/{channel}', [PaymentController::class, 'pagar'])->name('pagar');
-
-    Route::get('/success', [PaymentController::class, 'success'])->name('pago.success');
-    Route::get('/failure', [PaymentController::class, 'failure'])->name('pago.failure');
-    Route::get('/pending', [PaymentController::class, 'pending'])->name('pago.pending');
+Route::get('/pagar/{channel}', [PaymentController::class, 'pagar'])->name('pagar');
+    Route::get('/success', [PaymentController::class, 'success'])->name('payment.success');
+    Route::get('/failure', [PaymentController::class, 'failure'])->name('payment.failure');
+    Route::get('/pending', [PaymentController::class, 'pending'])->name('payment.pending');
 });
-
-
 
 Route::post('/webhook/mercadopago', [PaymentController::class, 'webhook']);
